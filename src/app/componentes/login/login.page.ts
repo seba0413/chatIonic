@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../servicios/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,11 +12,18 @@ export class LoginPage implements OnInit {
   email: string; 
   password: string; 
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              private router: Router ) { }
 
   onSubmitLogin() {
 
-    this.authService.login(this.email, this.password);
+    this.authService.login(this.email, this.password)
+    .then( respuesta => {
+      this.router.navigate(['/home']);
+    })
+    .catch( error => {
+      alert('Datos incorrectos');
+    })
   }
 
   ngOnInit() {

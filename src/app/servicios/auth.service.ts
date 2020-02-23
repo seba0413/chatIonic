@@ -10,11 +10,13 @@ export class AuthService {
 
   login ( email: string, password: string) {
 
+    return new Promise((resolve, rejected) => {
+      
     this.AFauth.auth.signInWithEmailAndPassword( email, password)
-    .then( respuesta => {
-      console.log( 'logueado', respuesta ); 
+    .then( user => {
+      resolve(user);
     })
-    .catch( error => console.log( 'error', error ));
+    .catch( error => rejected(error));
+    });
   }
-
 }
